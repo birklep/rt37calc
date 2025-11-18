@@ -1,0 +1,754 @@
+<!doctype html>
+<html lang="de">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#024A96">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>RT37calc - Portrait & Landscape</title>
+<style>
+:root{
+  --bg: #024A96;
+  --accent: #007BFF;
+  --white: #ffffff;
+  --green: #2e8b57;
+  --red: #b22222;
+  --btn-radius: 12px;
+
+  --rows: 7;
+  --header-h: 130px;
+  --footer-h: 0px;
+}
+
+html,body{
+  height:100%;
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+  background:var(--bg);
+  color:var(--white);
+  overflow:hidden;
+}
+
+/* --- Allgemeine App-Container für beide Ausrichtungen --- */
+.app-portrait,
+.app-landscape{
+  position:absolute;
+  inset:0;
+}
+
+/* Standard: Portrait anzeigen, Landscape ausblenden */
+#appPortrait{display:flex;}
+#appLandscape{display:none;}
+
+@media (orientation:landscape){
+  #appPortrait{display:none;}
+  #appLandscape{display:flex;}
+}
+
+/* ===================== PORTRAIT (Original-Layout, optimiert für XCover5) ===================== */
+
+.app-portrait{
+  width:100%;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+}
+
+.app-portrait header{
+  padding:10px 12px;
+  text-align:center;
+  border-bottom:3px solid rgba(255,255,255,0.06);
+  box-sizing:border-box;
+  height:var(--header-h);
+}
+
+.app-portrait .total{
+  font-size:calc(18px + 2.2vh);
+  font-weight:800;
+  line-height:1;
+}
+
+.app-portrait .sub{
+  font-size:12px;
+  opacity:0.95;
+  margin-top:4px;
+  white-space:pre-line;
+}
+
+.app-portrait .icons{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:6px;
+  opacity:0.95;
+  font-size:28px;
+  padding:0 8px;
+  box-sizing:border-box;
+}
+
+.app-portrait main{
+  flex:1;
+  padding:4px 6px 6px;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  box-sizing:border-box;
+}
+
+/* Jede Zeile bekommt den gleichen Anteil der verfügbaren Höhe */
+.row-p{
+  display:flex;
+  align-items:stretch;
+  justify-content:space-between;
+  gap:6px;
+  flex:1;
+  min-height:0;
+}
+
+/* Mitte: nur Icon, schmal und fix in der Breite */
+.label-p{
+  position:relative;
+  flex:0 0 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:800;
+  font-size:18px;
+  pointer-events:none;
+  opacity:0.98;
+}
+
+/* Seitliche Wrapper für Glas & Pitcher: teilen sich gleichmäßig den restlichen Platz */
+.side-wrap-p{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  align-items:stretch;
+}
+
+.side-wrap-p .split-btn-p{
+  width:100%;
+  height:100%;
+}
+
+.split-btn-p{
+  display:flex;
+  border-radius:var(--btn-radius);
+  overflow:hidden;
+  box-shadow:0 4px 0 rgba(0,0,0,0.08);
+  touch-action:manipulation;
+  position:relative;
+  flex:1;
+}
+
+/* Hochere Buttons durch vertikale Padding-Anpassung */
+.half-p{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  color:var(--white);
+  font-size:20px;
+  user-select:none;
+}
+
+.half-p.decr{background:var(--red);}
+.half-p.incr{background:var(--green);}
+
+.count-p{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:24px;
+  font-weight:900;
+  pointer-events:none;
+  color:rgba(255,255,255,0.98);
+}
+
+.split-btn-p.flash .half-p{
+  filter:brightness(1.12);
+  transition:filter 140ms ease;
+}
+
+.reset-btn{
+  background:var(--accent);
+  color:var(--white);
+  border:none;
+  border-radius:var(--btn-radius);
+  padding:6px 8px;
+  font-weight:800;
+  width:100%;
+  font-size:16px;
+}
+
+.icon-center{
+  font-size:24px;
+  pointer-events:none;
+  color:var(--white);
+}
+
+@media (max-width:420px){
+  .label-p{font-size:16px;flex-basis:36px;}
+  .count-p{font-size:20px;}
+}
+
+/* ===================== LANDSCAPE (Neue XCover-Variante) ===================== */
+
+.app-landscape{
+  width:100vw;
+  height:100vh;
+  display:flex;
+  flex-direction:row;
+  box-sizing:border-box;
+  padding:6px;
+  gap:6px;
+}
+
+/* Linker Bereich: 3x2 Getränke-Grid */
+.left{
+  flex:2.1;
+  display:flex;
+  align-items:stretch;
+  justify-content:center;
+}
+
+.drink-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(2,1fr);
+  gap:6px;
+  width:100%;
+  height:100%;
+}
+
+.drink-card{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+}
+
+.drink-icon{
+  text-align:center;
+  font-size:24px;
+  margin-bottom:2px;
+}
+
+/* Plus/Minus Block – Getränke: 2/3 +, 1/3 - */
+.pm{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 4px 0 rgba(0,0,0,0.12);
+  position:relative;
+}
+
+.pm.drink .pm-top{
+  flex:2;
+  background:var(--green);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:4px;
+  font-size:26px;
+  font-weight:900;
+}
+.pm.drink .pm-bottom{
+  flex:1;
+  background:var(--red);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:900;
+}
+
+/* Pfand: 1/3 +, 2/3 - */
+.pm.pfand .pm-top{
+  flex:1;
+  background:var(--green);
+  display:flex;
+  align-items:flex-start;
+  justify-content:center;
+  padding-top:4px;
+  font-size:24px;
+  font-weight:900;
+}
+.pm.pfand .pm-bottom{
+  flex:2;
+  background:var(--red);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  font-weight:900;
+}
+
+/* gemeinsame Elemente */
+.pm-top,.pm-bottom{
+  cursor:pointer;
+  user-select:none;
+  touch-action:manipulation;
+}
+
+.pm-count{
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  font-size:26px;
+  font-weight:900;
+  pointer-events:none;
+}
+
+/* disabled für Bier im Pitcher-Modus */
+.drink-card.disabled .pm-top,
+.drink-card.disabled .pm-bottom{
+  opacity:0.25;
+  pointer-events:none;
+}
+
+/* Rechte Seite: Summen, Pfand, Modus */
+.right{
+  flex:1.1;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.summary{
+  background:rgba(255,255,255,0.08);
+  border-radius:16px;
+  padding:10px;
+  text-align:center;
+  box-shadow:0 4px 0 rgba(0,0,0,0.12);
+  cursor:pointer;
+}
+
+.summary-total{
+  font-size:30px;
+  font-weight:800;
+}
+
+.summary-sub{
+  margin-top:4px;
+  font-size:14px;
+  opacity:0.95;
+  white-space:pre-line;
+}
+
+/* Pfand + Modus nebeneinander */
+.tools{
+  flex:1;
+  display:flex;
+  gap:6px;
+}
+
+.pfand-card{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+}
+
+.pfand-icon{
+  text-align:center;
+  font-size:22px;
+  margin-bottom:2px;
+}
+
+/* Modus-Toggle */
+.mode-card{
+  flex:1;
+  border-radius:16px;
+  box-shadow:0 4px 0 rgba(0,0,0,0.12);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:background 160ms ease, transform 80ms ease;
+}
+
+.mode-card span{
+  display:block;
+  font-size:18px;
+  font-weight:700;
+  margin-top:4px;
+}
+
+.mode-icon{
+  font-size:34px;
+}
+
+/* Farben je nach Modus */
+.mode-glass{background:#2e8b57;}
+.mode-pitcher{background:#007BFF;}
+
+@media (max-width:900px){
+  .summary-total{font-size:26px;}
+  .pm-count{font-size:24px;}
+}
+
+@media (max-width:720px){
+  .app-landscape{padding:4px;gap:4px;}
+  .drink-icon{font-size:22px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ======================== PORTRAIT-APP ======================== -->
+<div class="app-portrait" id="appPortrait" role="application" aria-label="Weihnachtsmarkt Kasse Hochformat">
+  <header>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="width:44px"></div>
+      <div style="text-align:center">
+        <div class="total" id="totalDisplayPortrait">0,00 €</div>
+        <div class="sub" id="subDisplayPortrait">0,00 € | 0,00 €&#10;Getränke | Pfand</div>
+      </div>
+      <div style="width:44px"></div>
+    </div>
+    <div class="icons">
+      <div title="Glas / Tasse">☕</div>
+      <div title="Pitcher / Krug">🏺</div>
+    </div>
+  </header>
+  <main id="mainPortrait"></main>
+</div>
+
+<!-- ======================== LANDSCAPE-APP ======================== -->
+<div class="app-landscape" id="appLandscape" role="application" aria-label="Weihnachtsmarkt Kasse Querformat">
+  <div class="left">
+    <div class="drink-grid" id="drinkGrid"></div>
+  </div>
+  <div class="right">
+    <div class="summary" id="summaryArea">
+      <div class="summary-total" id="totalDisplayLand">0,00 €</div>
+      <div class="summary-sub" id="subDisplayLand">0,00 € | 0,00 €&#10;Getränke | Pfand</div>
+    </div>
+    <div class="tools">
+      <div class="pfand-card">
+        <div class="pfand-icon">♻️</div>
+        <div class="pm pfand" id="pfandControl">
+          <div class="pm-top" id="pfandPlus">+</div>
+          <div class="pm-bottom" id="pfandMinus">-</div>
+          <div class="pm-count" id="pfandCount">0</div>
+        </div>
+      </div>
+      <div class="mode-card mode-glass" id="modeToggle">
+        <div class="mode-icon" id="modeIcon">🍷</div>
+        <span id="modeLabel">Glas</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const items = [
+  { key:'glueh',  icon:'🍷', label:'WEIN',   glassPrice:4, pitcherPrice:15, glassPfand:3, pitcherPfand:10, hasPitcher:true },
+  { key:'most',   icon:'🍎', label:'MOST',   glassPrice:4, pitcherPrice:15, glassPfand:3, pitcherPfand:10, hasPitcher:true },
+  { key:'hh',     icon:'⚖️', label:'½/½',   glassPrice:4, pitcherPrice:15, glassPfand:3, pitcherPfand:10, hasPitcher:true },
+  { key:'punsch', icon:'🧒', label:'PUNSCH', glassPrice:3, pitcherPrice:10, glassPfand:3, pitcherPfand:10, hasPitcher:true },
+  { key:'aperol', icon:'🍹', label:'APEROL', glassPrice:7, pitcherPrice:25, glassPfand:3, pitcherPfand:10, hasPitcher:true },
+  { key:'pfand',  icon:'♻️', label:'PFAND',  glassPrice:0, pitcherPrice:0,  glassPfand:3, pitcherPfand:10, hasPitcher:true, isPfand:true },
+  { key:'bier',   icon:'🍺', label:'BIER',   glassPrice:3, pitcherPrice:0,  glassPfand:0, pitcherPfand:0,  hasPitcher:false }
+];
+
+const itemMap = {};
+items.forEach(it=>itemMap[it.key]=it);
+const pfandItem = items.find(it=>it.isPfand);
+
+const state = {
+  counts:{},
+  manualPfandAdjust:{glass:0,pitcher:0},
+  mode:'glass'
+};
+
+items.forEach(it=>{
+  if(!it.isPfand){
+    state.counts[it.key+'_glass']=0;
+    if(it.hasPitcher) state.counts[it.key+'_pitcher']=0;
+  }
+});
+
+function fmt(n){return n.toFixed(2).replace('.',',')+' €';}
+
+/* PORTRAIT UI */
+const mainP=document.getElementById('mainPortrait');
+
+function makeSplitPortrait(item,side){
+  const wrapper=document.createElement('div');
+  wrapper.className='split-btn-p';
+  wrapper.dataset.key=item.key;
+  wrapper.dataset.side=side;
+
+  const decr=document.createElement('div');
+  decr.className='half-p decr';
+  decr.innerText='-';
+  decr.onclick=e=>{e.stopPropagation();change(item,side,-1);flash(wrapper);};
+
+  const incr=document.createElement('div');
+  incr.className='half-p incr';
+  incr.innerText='+';
+  incr.onclick=e=>{e.stopPropagation();change(item,side,1);flash(wrapper);};
+
+  const cnt=document.createElement('div');
+  cnt.className='count-p';
+  cnt.innerText='0';
+
+  wrapper.appendChild(decr);
+  wrapper.appendChild(incr);
+  wrapper.appendChild(cnt);
+  return wrapper;
+}
+
+function flash(el){
+  el.classList.add('flash');
+  setTimeout(()=>el.classList.remove('flash'),140);
+}
+
+items.forEach(it=>{
+  const row=document.createElement('div');
+  row.className='row-p';
+
+  const leftSplit=makeSplitPortrait(it,'glass');
+
+  const label=document.createElement('div');
+  label.className='label-p';
+  const iconCenter=document.createElement('div');
+  iconCenter.className='icon-center';
+  iconCenter.innerText=it.icon;
+  label.appendChild(iconCenter);
+
+  let rightEl;
+  if(it.hasPitcher){
+    rightEl=makeSplitPortrait(it,'pitcher');
+  }else{
+    const reset=document.createElement('button');
+    reset.className='reset-btn';
+    reset.innerText='Neue Bestellung';
+    reset.onclick=resetAll;
+    rightEl=reset;
+  }
+
+  const leftWrap=document.createElement('div');
+  leftWrap.className='side-wrap-p';
+  leftWrap.appendChild(leftSplit);
+
+  const centerWrap=document.createElement('div');
+  centerWrap.appendChild(label);
+
+  const rightWrap=document.createElement('div');
+  rightWrap.className='side-wrap-p';
+  rightWrap.appendChild(rightEl);
+
+  row.appendChild(leftWrap);
+  row.appendChild(centerWrap);
+  row.appendChild(rightWrap);
+
+  mainP.appendChild(row);
+});
+
+/* LANDSCAPE UI */
+const grid=document.getElementById('drinkGrid');
+items.filter(it=>!it.isPfand).forEach(it=>{
+  const card=document.createElement('div');
+  card.className='drink-card';
+  card.dataset.key=it.key;
+
+  const icon=document.createElement('div');
+  icon.className='drink-icon';
+  icon.textContent=it.icon;
+
+  const pm=document.createElement('div');
+  pm.className='pm drink';
+
+  const top=document.createElement('div');
+  top.className='pm-top';
+  top.textContent='+';
+
+  const bottom=document.createElement('div');
+  bottom.className='pm-bottom';
+  bottom.textContent='-';
+
+  const cnt=document.createElement('div');
+  cnt.className='pm-count';
+  cnt.textContent='0';
+
+  top.addEventListener('click',()=>changeDrinkLandscape(it.key,+1));
+  bottom.addEventListener('click',()=>changeDrinkLandscape(it.key,-1));
+
+  pm.appendChild(top);
+  pm.appendChild(bottom);
+  pm.appendChild(cnt);
+
+  card.appendChild(icon);
+  card.appendChild(pm);
+  grid.appendChild(card);
+});
+
+// Modus-Toggle
+const modeToggle=document.getElementById('modeToggle');
+modeToggle.addEventListener('click',()=>{
+  state.mode = state.mode==='glass' ? 'pitcher' : 'glass';
+  updateModeUI();
+  updateAll();
+});
+
+function updateModeUI(){
+  const modeCard=document.getElementById('modeToggle');
+  const label=document.getElementById('modeLabel');
+  const icon=document.getElementById('modeIcon');
+
+  if(state.mode==='glass'){
+    modeCard.classList.remove('mode-pitcher');
+    modeCard.classList.add('mode-glass');
+    label.textContent='Glas';
+    icon.textContent='🍷';
+  }else{
+    modeCard.classList.remove('mode-glass');
+    modeCard.classList.add('mode-pitcher');
+    label.textContent='Pitcher';
+    icon.textContent='🏺';
+  }
+
+  document.querySelectorAll('.drink-card').forEach(card=>{
+    const key=card.dataset.key;
+    const item=itemMap[key];
+    if(state.mode==='pitcher' && item && !item.hasPitcher){
+      card.classList.add('disabled');
+    }else{
+      card.classList.remove('disabled');
+    }
+  });
+}
+
+// Pfand in Landscape
+document.getElementById('pfandPlus').addEventListener('click',()=>{
+  change(pfandItem,state.mode,+1);
+});
+document.getElementById('pfandMinus').addEventListener('click',()=>{
+  change(pfandItem,state.mode,-1);
+});
+
+// Reset
+document.getElementById('summaryArea').addEventListener('click',resetAll);
+
+function change(item,side,delta){
+  if(item.isPfand){
+    if(side==='glass') state.manualPfandAdjust.glass+=delta;
+    else state.manualPfandAdjust.pitcher+=delta;
+  }else{
+    const key=item.key+'_'+side;
+    const cur=state.counts[key]||0;
+    const next=cur+delta;
+    if(next<0) return;
+    state.counts[key]=next;
+  }
+  updateAll();
+}
+
+function changeDrinkLandscape(key,delta){
+  const item=itemMap[key];
+  if(!item) return;
+  if(state.mode==='pitcher' && !item.hasPitcher) return;
+  change(item,state.mode,delta);
+}
+
+function fmtSub(drinksTotal,pfMoney){
+  const pfTxt = pfMoney<0 ? '-'+fmt(Math.abs(pfMoney)).replace(' €','')+' €' : fmt(pfMoney);
+  return fmt(drinksTotal)+' | '+pfTxt+'\nGetränke | Pfand';
+}
+
+function updateAll(){
+  let drinksTotal=0;
+  let pfAutoGlass=0;
+  let pfAutoPitcher=0;
+
+  items.forEach(it=>{
+    if(it.hasPitcher){
+      const g=state.counts[it.key+'_glass']||0;
+      const p=state.counts[it.key+'_pitcher']||0;
+      drinksTotal+=g*(it.glassPrice||0)+p*(it.pitcherPrice||0);
+      if(!it.isPfand){
+        if(it.glassPfand) pfAutoGlass+=g;
+        if(it.pitcherPfand) pfAutoPitcher+=p;
+      }
+    }else if(!it.isPfand){
+      const g=state.counts[it.key+'_glass']||0;
+      drinksTotal+=g*(it.glassPrice||0);
+      if(it.glassPfand) pfAutoGlass+=g;
+    }
+  });
+
+  const totalPfGlass = pfAutoGlass + (state.manualPfandAdjust.glass||0);
+  const totalPfPitcher = pfAutoPitcher + (state.manualPfandAdjust.pitcher||0);
+  const pfMoney = totalPfGlass*3 + totalPfPitcher*10;
+  const grand = drinksTotal + pfMoney;
+
+  const totalP=document.getElementById('totalDisplayPortrait');
+  const subP=document.getElementById('subDisplayPortrait');
+  if(totalP && subP){
+    totalP.innerText=(grand<0?'-':'')+fmt(Math.abs(grand));
+    subP.innerText=fmtSub(drinksTotal,pfMoney);
+  }
+
+  document.querySelectorAll('.split-btn-p').forEach(el=>{
+    const key=el.dataset.key;
+    const side=el.dataset.side;
+    const span=el.querySelector('.count-p');
+    if(!span) return;
+    if(key==='pfand'){
+      span.innerText = side==='glass' ? totalPfGlass : totalPfPitcher;
+    }else{
+      span.innerText = state.counts[key+'_'+side]||0;
+    }
+  });
+
+  const totalL=document.getElementById('totalDisplayLand');
+  const subL=document.getElementById('subDisplayLand');
+  if(totalL && subL){
+    totalL.textContent=fmt(grand);
+    subL.textContent=fmtSub(drinksTotal,pfMoney);
+  }
+
+  document.querySelectorAll('.drink-card').forEach(card=>{
+    const key=card.dataset.key;
+    const cntEl=card.querySelector('.pm-count');
+    if(!cntEl) return;
+    const val=state.counts[key+'_'+state.mode]||0;
+    cntEl.textContent=val;
+  });
+
+  const pfCountEl=document.getElementById('pfandCount');
+  if(pfCountEl){
+    const pfCount = state.mode==='glass' ? totalPfGlass : totalPfPitcher;
+    pfCountEl.textContent=pfCount;
+  }
+}
+
+function resetAll(){
+  Object.keys(state.counts).forEach(k=>state.counts[k]=0);
+  state.manualPfandAdjust.glass=0;
+  state.manualPfandAdjust.pitcher=0;
+  updateAll();
+}
+
+updateModeUI();
+updateAll();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("./sw.js");
+}
+</script>
+
+</body>
+</html>
