@@ -349,30 +349,34 @@ html,body{
 }
 
 /* Pfand + Modus nebeneinander */
-/* Untere Reihe rechts: soll so hoch sein wie die untere Getränkereihe */
+/* Untere rechte Reihe (Pfand + Modus) */
 .tools{
-  flex:1;              /* nimmt die zweite Hälfte der Höhe ein */
+  flex:1;                 /* nimmt die zweite Hälfte der rechten Spalte ein */
   display:flex;
   gap:6px;
-  align-items:stretch; /* sorgt dafür, dass Pfand + Modus die ganze Höhe nutzen */
+  align-items:stretch;    /* beide Spalten über die volle Höhe */
 }
 
-.pfand-card,
-.mode-card-wrap{
+/* Gemeinsamer Aufbau für Pfand- und Modus-Spalte */
+.tools-col{
   flex:1;
   display:flex;
   flex-direction:column;
-  justify-content: center;
 }
-
-.pfand-icon,
-.mode-icon-top{
+  
+/* Icon oberhalb der Buttons */
+.tools-icon{
   text-align:center;
   font-size:22px;
-  margin-bottom:2px;
+  margin-bottom:4px;
 }
 
-/* Modus-Toggle */
+/* Pfand-Button füllt den Rest der Spalte */
+.pm.pfand{
+  flex:1;
+}
+
+/* Modus-Button füllt den Rest der Spalte */
 .mode-card{
   flex:1;
   border-radius:16px;
@@ -385,13 +389,6 @@ html,body{
   transition:background 160ms ease, transform 80ms ease;
 }
 
-.mode-top-icon {
-  font-size: 20px;
-  text-align: center;
-  margin-bottom: 4px;
-  opacity: 0.95;
-}
-  
 .mode-card span{
   display:block;
   font-size:18px;
@@ -445,22 +442,28 @@ html,body{
     <div class="drink-grid" id="drinkGrid"></div>
   </div>
   <div class="right">
+    <!-- Obere Reihe: Summen -->
     <div class="summary" id="summaryArea">
       <div class="summary-total" id="totalDisplayLand">0,00 €</div>
-      <div class="summary-sub" id="subDisplayLand">0,00 € | 0,00 €&#10;Getränke | Pfand    </div>
+      <div class="summary-sub" id="subDisplayLand">0,00 € | 0,00 €&#10;Getränke | Pfand</div>
     </div>
+  
+    <!-- Untere Reihe: Pfand links, Modus rechts -->
     <div class="tools">
-      <div class="pfand-card">
-        <div class="pfand-icon">♻️</div>
+      <!-- Linke Spalte: Pfand -->
+      <div class="tools-col">
+        <div class="tools-icon">♻️</div>
         <div class="pm pfand" id="pfandControl">
           <div class="pm-top" id="pfandPlus">+</div>
           <div class="pm-bottom" id="pfandMinus">-</div>
           <div class="pm-count" id="pfandCount">0</div>
         </div>
       </div>
-      <div class="mode-card-wrap>
-        <div class="mode-top-icon">↔️</div>
-        <div class="mode-card mode-glass" id="modeToggle">  
+  
+      <!-- Rechte Spalte: Modus Glas/Pitcher -->
+      <div class="tools-col">
+        <div class="tools-icon">⇄</div>
+        <div class="mode-card mode-glass" id="modeToggle">
           <div class="mode-icon" id="modeIcon">🍷</div>
           <span id="modeLabel">Glas</span>
         </div>
