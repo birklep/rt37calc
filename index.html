@@ -321,7 +321,7 @@ html,body{
   flex-direction:column;
   gap:6px;
 }
-
+/* Obere Reihe rechts: soll so hoch sein wie die obere Getränkereihe */
 .summary{
   background:rgba(255,255,255,0.08);
   border-radius:16px;
@@ -329,6 +329,11 @@ html,body{
   text-align:center;
   box-shadow:0 4px 0 rgba(0,0,0,0.12);
   cursor:pointer;
+  /* NEU: gleiche Höhe wie die erste Reihe links */
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
 }
 
 .summary-total{
@@ -344,10 +349,12 @@ html,body{
 }
 
 /* Pfand + Modus nebeneinander */
+/* Untere Reihe rechts: soll so hoch sein wie die untere Getränkereihe */
 .tools{
-  flex:1;
+  flex:1;              /* nimmt die zweite Hälfte der Höhe ein */
   display:flex;
   gap:6px;
+  align-items:stretch; /* sorgt dafür, dass Pfand + Modus die ganze Höhe nutzen */
 }
 
 .pfand-card{
