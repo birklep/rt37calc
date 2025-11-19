@@ -337,13 +337,13 @@ html,body{
 }
 
 .summary-total{
-  font-size:30px;
+  font-size:40px;
   font-weight:800;
 }
 
 .summary-sub{
   margin-top:4px;
-  font-size:14px;
+  font-size:20px;
   opacity:0.95;
   white-space:pre-line;
 }
@@ -357,14 +357,16 @@ html,body{
   align-items:stretch; /* sorgt dafür, dass Pfand + Modus die ganze Höhe nutzen */
 }
 
-.pfand-card{
+.pfand-card,
+.mode-card-wrap{
   flex:1;
   display:flex;
   flex-direction:column;
   justify-content: center;
 }
 
-.pfand-icon{
+.pfand-icon,
+.mode-icon-top{
   text-align:center;
   font-size:22px;
   margin-bottom:2px;
@@ -381,8 +383,6 @@ html,body{
   justify-content:center;
   cursor:pointer;
   transition:background 160ms ease, transform 80ms ease;
-  padding-top: 6px;
-  padding-bottom: 6px;
 }
 
 .mode-top-icon {
@@ -427,7 +427,7 @@ html,body{
       <div style="width:44px"></div>
       <div style="text-align:center">
         <div class="total" id="totalDisplayPortrait">0,00 €</div>
-        <div class="sub" id="subDisplayPortrait">0,00 € | 0,00 €&#10;Getränke | Pfand</div>
+        <div class="sub" id="subDisplayPortrait">0,00 € | 0,00 €&#10;Getränke | Pfand    </div>
       </div>
       <div style="width:44px"></div>
     </div>
@@ -447,7 +447,7 @@ html,body{
   <div class="right">
     <div class="summary" id="summaryArea">
       <div class="summary-total" id="totalDisplayLand">0,00 €</div>
-      <div class="summary-sub" id="subDisplayLand">0,00 € | 0,00 €&#10;Getränke | Pfand</div>
+      <div class="summary-sub" id="subDisplayLand">0,00 € | 0,00 €&#10;Getränke | Pfand    </div>
     </div>
     <div class="tools">
       <div class="pfand-card">
@@ -458,10 +458,12 @@ html,body{
           <div class="pm-count" id="pfandCount">0</div>
         </div>
       </div>
-      <div class="mode-card mode-glass" id="modeToggle">
+      <div class="mode-card-wrap>
         <div class="mode-top-icon">↔️</div>
-        <div class="mode-icon" id="modeIcon">🍷</div>
-        <span id="modeLabel">Glas</span>
+        <div class="mode-card mode-glass" id="modeToggle">  
+          <div class="mode-icon" id="modeIcon">🍷</div>
+          <span id="modeLabel">Glas</span>
+        </div>
       </div>
     </div>
   </div>
