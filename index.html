@@ -178,6 +178,22 @@ html,body{
   user-select:none;
 }
 
+/* Getränke: 2/3 grün (Plus), 1/3 rot (Minus) */
+.split-drink .half-p.incr{
+  flex:2;
+}
+.split-drink .half-p.decr{
+  flex:1;
+}
+
+/* Pfand: 1/3 grün (Plus), 2/3 rot (Minus) */
+.split-pfand .half-p.incr{
+  flex:1;
+}
+.split-pfand .half-p.decr{
+  flex:2;
+}
+  
 .half-p.decr{background:var(--red);}
 .half-p.incr{background:var(--green);}
 
@@ -212,6 +228,7 @@ html,body{
   font-size:24px;
   pointer-events:none;
   color:var(--white);
+  margin:0;              /* sicherstellen, dass nichts nach oben schiebt */
 }
 
 @media (max-width:420px){
@@ -530,9 +547,16 @@ const mainP=document.getElementById('mainPortrait');
 
 function makeSplitPortrait(item,side){
   const wrapper=document.createElement('div');
-  wrapper.className='split-btn-p';
-  wrapper.dataset.key=item.key;
-  wrapper.dataset.side=side;
+  wrapper.className = 'split-btn-p';
+  wrapper.dataset.key = item.key;
+  wrapper.dataset.side = side;
+
+  // Kennzeichnen, ob Getränk oder Pfand
+  if (item.isPfand) {
+    wrapper.classList.add('split-pfand');
+  } else {
+    wrapper.classList.add('split-drink');
+  }
 
   const decr=document.createElement('div');
   decr.className='half-p decr';
@@ -559,7 +583,13 @@ function flash(el){
   setTimeout(()=>el.classList.remove('flash'),140);
 }
 
-items.forEach(it=>{
+// Reihenfolge nur für PORTRAIT festlegen
+const portraitOrder = ['bier', 'glueh', 'most', 'hh', 'punsch', 'aperol', 'pfand'];
+
+portraitOrder.forEach(key => {
+  const it = itemMap[key];
+  if (!it) return;
+
   const row=document.createElement('div');
   row.className='row-p';
 
