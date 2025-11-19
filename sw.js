@@ -1,6 +1,6 @@
 self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open("rt37-cache-v2").then(cache => {
+    caches.open("rt37-cache-20251119").then(cache => {
       return cache.addAll([
         "./index.html",
         "./manifest.json"
@@ -21,4 +21,5 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
 
