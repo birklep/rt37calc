@@ -133,10 +133,9 @@ html,body{
 .label-p{
   position:relative;
   flex:0 0 40px;
-  height:100%;                 /* nimmt komplette Zeilenhöhe an */
   display:flex;
-  align-items:center;          /* vertikal mittig */
-  justify-content:center;      /* horizontal mittig */
+  align-items:center;
+  justify-content:center;
   text-align:center;
   font-weight:800;
   font-size:18px;
@@ -229,12 +228,7 @@ html,body{
   font-size:24px;
   pointer-events:none;
   color:var(--white);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  height:100%;
-  margin:0;   
+  margin:0;              /* sicherstellen, dass nichts nach oben schiebt */
 }
 
 @media (max-width:420px){
