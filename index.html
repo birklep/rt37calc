@@ -20,13 +20,36 @@
   --footer-h: 0px;
 }
 
+@media (orientation:portrait) and (max-height:700px){
+  :root{
+    /* Header etwas kompakter machen */
+    --header-h: 115px;
+  }
+
+  .app-portrait main{
+    /* vertikale Lücken minimal reduzieren */
+    gap:4px;
+    padding:2px 4px 4px;
+  }
+}
+
 html,body{
-  height:100%;
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
   background:var(--bg);
   color:var(--white);
-  overflow:hidden;
+
+  /* erst normaler Viewport */
+  height:100vh;
+
+  /* moderner, dynamischer Viewport (iOS & moderne Browser) */
+  height:100dvh;
+
+  /* auf sehr kleinen Geräten lieber minimal scrollen als abschneiden */
+  overflow:auto;
+
+  /* iOS-Safe-Area unten berücksichtigen (Notch / Home-Bar) */
+  padding-bottom:env(safe-area-inset-bottom);
 }
 
 /* --- Allgemeine App-Container für beide Ausrichtungen --- */
