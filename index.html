@@ -122,20 +122,21 @@ html,body{
 /* Jede Zeile bekommt den gleichen Anteil der verfügbaren Höhe */
 .row-p{
   display:flex;
-  align-items:stretch;
+  align-items:stretch;          /* Buttons bleiben hoch */
   justify-content:space-between;
   gap:6px;
   flex:1;
   min-height:0;
 }
 
-/* Mitte: nur Icon, schmal und fix in der Breite */
+/* Mitte: Icon-Spalte füllt die gesamte Zeilenhöhe */
 .label-p{
   position:relative;
   flex:0 0 40px;
+  height:100%;                  /* nimmt volle Zeilenhöhe */
   display:flex;
-  align-items:center;
-  justify-content:center;
+  align-items:center;           /* vertikal mittig */
+  justify-content:center;       /* horizontal mittig */
   text-align:center;
   font-weight:800;
   font-size:18px;
@@ -224,11 +225,17 @@ html,body{
   font-size:16px;
 }
 
+/* Emoji selbst wird im Label zentriert */
 .icon-center{
   font-size:24px;
   pointer-events:none;
   color:var(--white);
-  margin:0;              /* sicherstellen, dass nichts nach oben schiebt */
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:100%;
+  margin:0;
 }
 
 @media (max-width:420px){
