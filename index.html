@@ -20,16 +20,24 @@
   --footer-h: 0px;
 }
 
-@media (orientation:portrait) and (max-height:700px){
+@media (orientation:portrait) and (max-height:800px){
   :root{
-    /* Header etwas kompakter machen */
-    --header-h: 115px;
+    /* Header kompakter für kleinere Portrait-Displays (z.B. iPhones) */
+    --header-h: 110px;
   }
 
   .app-portrait main{
-    /* vertikale Lücken minimal reduzieren */
+    /* vertikale Lücken leicht reduzieren */
     gap:4px;
     padding:2px 4px 4px;
+  }
+
+  /* Buttons minimal kleiner beschriften, damit mehr Inhalt reinpasst */
+  .half-p{
+    font-size:18px;
+  }
+  .count-p{
+    font-size:22px;
   }
 }
 
