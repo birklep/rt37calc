@@ -468,6 +468,37 @@ html,body{
   .app-landscape{padding:4px;gap:4px;}
   .drink-icon{font-size:22px;}
 }
+
+/* iOS / iPhone Portrait: Buttons etwas flacher machen, damit alles draufpasst */
+@supports (-webkit-touch-callout: none) and (orientation:portrait) {
+  :root{
+    /* Header kompakter, damit unten mehr Platz bleibt */
+    --header-h: 100px;
+  }
+
+  .app-portrait header{
+    padding:4px 10px;
+  }
+
+  .app-portrait main{
+    /* etwas weniger Abstand zwischen den Reihen */
+    gap:3px;
+    padding:2px 4px 4px;
+  }
+
+  .row-p{
+    gap:4px;
+  }
+
+  /* Beschriftung minimal kleiner → Buttons wirken flacher */
+  .half-p{
+    font-size:18px;
+  }
+
+  .count-p{
+    font-size:22px;
+  }
+}
 </style>
 </head>
 <body>
