@@ -20,27 +20,19 @@
   --footer-h: 0px;
 }
 
-@media (orientation:portrait) and (max-height:780px){
+@media (orientation:portrait) and (max-height:800px){
   :root{
-    /* Header kompakter für kleinere Portrait-Displays (z.B. viele iPhones) */
-    --header-h: 105px;
-  }
-
-  .app-portrait header{
-    padding:6px 10px;
+    /* Header kompakter für kleinere Portrait-Displays (z.B. iPhones) */
+    --header-h: 110px;
   }
 
   .app-portrait main{
-    /* weniger Abstand zwischen den Reihen */
-    gap:3px;
+    /* vertikale Lücken leicht reduzieren */
+    gap:4px;
     padding:2px 4px 4px;
   }
 
-  .row-p{
-    gap:4px;
-  }
-
-  /* Beschriftungen minimal kleiner, damit alles entspannter reinpasst */
+  /* Buttons minimal kleiner beschriften, damit mehr Inhalt reinpasst */
   .half-p{
     font-size:18px;
   }
@@ -149,16 +141,15 @@ html,body{
 .label-p{
   position:relative;
   flex:0 0 40px;
-  height:100%;                 /* nimmt die volle Zeilenhöhe */
+  height:100%;                  /* nimmt volle Zeilenhöhe */
   display:flex;
-  align-items:center;          /* vertikal mittig */
-  justify-content:center;      /* horizontal mittig */
+  align-items:center;           /* vertikal mittig */
+  justify-content:center;       /* horizontal mittig */
   text-align:center;
   font-weight:800;
   font-size:18px;
   pointer-events:none;
   opacity:0.98;
-}
 }
 
 /* Seitliche Wrapper für Glas & Pitcher: teilen sich gleichmäßig den restlichen Platz */
