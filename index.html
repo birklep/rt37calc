@@ -23,7 +23,7 @@
 @media (orientation:portrait) and (max-height:800px){
   :root{
     /* Header kompakter für kleinere Portrait-Displays (z.B. iPhones) */
-    --header-h: 110px;
+    --header-h: 130px;
   }
 
   .app-portrait main{
@@ -469,34 +469,11 @@ html,body{
   .drink-icon{font-size:22px;}
 }
 
-/* iOS / iPhone Portrait: Buttons etwas flacher machen, damit alles draufpasst */
+/* iOS / iPhone: Portrait-Höhe leicht reduzieren, damit nichts abgeschnitten wird */
 @supports (-webkit-touch-callout: none) and (orientation:portrait) {
-  :root{
-    /* Header kompakter, damit unten mehr Platz bleibt */
-    --header-h: 100px;
-  }
-
-  .app-portrait header{
-    padding:4px 10px;
-  }
-
-  .app-portrait main{
-    /* etwas weniger Abstand zwischen den Reihen */
-    gap:3px;
-    padding:2px 4px 4px;
-  }
-
-  .row-p{
-    gap:4px;
-  }
-
-  /* Beschriftung minimal kleiner → Buttons wirken flacher */
-  .half-p{
-    font-size:18px;
-  }
-
-  .count-p{
-    font-size:22px;
+  .app-portrait{
+    /* etwas kleiner als voller Screen + Safe-Area berücksichtigen */
+    height:calc(100dvh - env(safe-area-inset-bottom) - 12px);
   }
 }
 </style>
