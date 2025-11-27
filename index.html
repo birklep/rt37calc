@@ -789,7 +789,7 @@ function updateAll(){
 
   const totalPfGlass = pfAutoGlass + (state.manualPfandAdjust.glass||0);
   const totalPfPitcher = pfAutoPitcher + (state.manualPfandAdjust.pitcher||0);
-  const pfMoney = totalPfGlass*3 + totalPfPitcher*10;
+  const pfMoney = totalPfGlass*3 + totalPfPitcher*5;
   const grand = drinksTotal + pfMoney;
 
   const totalP=document.getElementById('totalDisplayPortrait');
