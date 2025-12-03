@@ -1,4 +1,4 @@
-const CACHE_NAME = "rt37-cache-v11";   // <- bei jedem Update erhöhen!
+const CACHE_NAME = "rt37-cache-v12";   // <- bei jedem Update erhöhen!
 
 // Alle Dateien, die offline verfügbar sein sollen
 const OFFLINE_URLS = [
@@ -39,6 +39,7 @@ self.addEventListener("fetch", event => {
     })
   );
 });
+
 
 
 
